@@ -122,3 +122,54 @@ app2.mount('#container-2')
 ```
 
 Если Vue используется для улучшения отрисованного на сервере HTML и нужно, чтобы Vue управлял только определёнными частями страницы, избегайте создания одного экземпляра приложения Vue на всю страницу. Вместо этого лучше создать несколько небольших экземпляров приложения и установить их на те элементы, за которые они отвечают.
+<template>
+  <div class="login-form">
+    <h2>Вход в систему</h2>
+    <input v-model="login" placeholder="Логин" />
+    <input v-model="password" type="password" placeholder="Пароль" />
+    <button @click="submit">Войти</button>
+
+    <p v-if="error" style="color: red;">{{ error }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const login = ref('')
+const password = ref('')
+const error = ref('')
+
+function submit() {
+  error.value = ''
+
+  if (login.value === '' || password.value === '') {
+    error.value = 'Пожалуйста, заполните все поля'
+    return
+  }
+
+  // Простая проверка (например, правильный логин: admin, пароль: 1234)
+  if (login.value === 'admin' && password.value === '1234') {
+    alert('Успешный вход!')
+    // Здесь можно сделать переход или что-то ещё
+  } else {
+    error.value = 'Неверный логин или пароль'
+  }
+}
+</script>
+
+<style>
+.login-form {
+  max-width: 300px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+}
+.login-form input {
+  margin-bottom: 10px;
+  padding: 8px;
+}
+.login-form button {
+  padding: 8px;
+}
+</style>
